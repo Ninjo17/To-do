@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>To Do List</title>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+    }
+    #todo-list {
+        width: 300px;
+        margin: 0 auto;
+    }
+    #todo-list h2 {
+        text-align: center;
+    }
+    #todo-input {
+        width: 100%;
+        margin-bottom: 10px;
+        padding: 5px;
+        box-sizing: border-box;
+    }
+    #todo-items {
+        list-style-type: none;
+        padding: 0;
+    }
+    .todo-item {
+        display: flex;
+        align-items: center;
+        padding: 5px;
+        border-bottom: 1px solid #ccc;
+    }
+    .todo-item input[type="checkbox"] {
+        margin-right: 10px;
+    }
+    .todo-item.completed {
+        text-decoration: line-through;
+    }
+</style>
+</head>
+<body>
+<div id="todo-list">
+    <h2>To Do List</h2>
+    <input type="text" id="todo-input" placeholder="Add a new task...">
+    <ul id="todo-items"></ul>
+</div>
+<script>
+    const todoInput = document.getElementById('todo-input');
+    const todoList = document.getElementById('todo-items');
+
+    function createTodoItem(task) {
+        const todoItem = document.createElement('li');
+        todoItem.className = 'todo-item';
+        todoItem.innerHTML = `
+            <input type="checkbox">
+            <span>${task}</span>
+            <button onclick="deleteTodoItem(this)">Delete</button>
+        `;
+        todoList.appendChild(todoItem);
+    }
+
+    function addTodoItem() {
+        const task = todoInput.value.trim();
+        if (task !== '') {
+            createTodoItem(task);
+            todoInput.value = '';
+        }
+    }
+
+    function deleteTodoItem(button) {
+        button.parentElement.remove();
+    }
+
+    todoInput.addEventListener('keypress', function(event) {
+        if (event.key === 'Enter') {
+            addTodoItem();
+        }
+    });
+</script>
+</body>
+</html>
